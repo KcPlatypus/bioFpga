@@ -1,0 +1,53 @@
+% Gate 1
+MA(k) for i11+i21 => i11+i21+y11.MA(k) for y11 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
+MA(k) for a8+fp => a8.
+MA(k) for fn => _.
+MA(K) for fp+fn => _.
+
+% Gate 2
+MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
+MA(k) for a8+fp => a8.
+MA(k) for fn => _.
+MA(K) for fp+fn => _.
+
+% Gate 3
+MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
+MA(k) for a8+fp => a8.
+MA(k) for fn => _.
+MA(K) for fp+fn => _.
+
+% Gate 4
+MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
+MA(k) for a8+fp => a8.
+MA(k) for fn => _.
+MA(K) for fp+fn => _.
+
+% Gate 5
+MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
+MA(k) for a8+fp => a8.
+MA(k) for fn => _.
+MA(K) for fp+fn => _.
+
+% Gate 6
+MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
+MA(k) for a8+fp => a8.
+MA(k) for fn => _.
+MA(K) for fp+fn => _.
+
+% Gate 7
+MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
+MA(k) for a8+fp => a8.
+MA(k) for fn => _.
+MA(K) for fp+fn => _.
+
+% Gate 8
+MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
+MA(k) for a8+fp => a8.
+MA(k) for fn => _.
+MA(K) for fp+fn => _.
+
+numerical_method(rk).
+numerical_simulation(500).
+hide_molecules({a3,a8,y1,y2}).
+export_plot(cdnf).
+plot.

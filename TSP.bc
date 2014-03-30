@@ -1,0 +1,459 @@
+%=========================================================%
+% This is a demonstrative example for solving the 
+% Traveling Salesman Problem using chemical reactions.
+% There are 4 nodes and 4*4 neurons in this example.
+% Reference:
+%
+% Summary:
+%   # of species= .
+%   # of reactions= 255.
+% By HJ Katherine Chiang, 2014.
+%=========================================================%
+%========================= Input =========================%
+% Distances between nodes.
+present(d12,10). % = d21.
+present(d13,100). % = d31.
+present(d14,50).
+present(d23,20).
+present(d24,150).
+present(d34,50).
+
+%================================================%
+% tau=1/(Time constant).
+% Parameters(A,B,C,D).
+
+present(tau,1).
+present(A,50). 
+%-(shared also by B and D.)
+
+present(C,20).
+present(Cn,500).
+%-(A legitimate path is composed of four nodes.)
+
+%================================================%
+% 4*4 Neurons nij
+% Listed here for initial state configuration.
+present(n110,0.5).
+present(n111,0.5).
+
+present(n120,0.5).
+present(n121,0.5).
+
+present(n130,0.5).
+present(n131,0.5).
+
+present(n140,0.5).
+present(n141,0.5).
+
+present(n210,0.5).
+present(n211,0.5).
+
+present(n220,0.5).
+present(n221,0.5).
+
+present(n230,0.5).
+present(n231,0.5).
+
+present(n240,0.5).
+present(n241,0.5).
+
+present(n310,0.5).
+present(n311,0.5).
+
+present(n320,0.5).
+present(n321,0.5).
+
+present(n330,0.5).
+present(n331,0.5).
+
+present(n340,0.5).
+present(n341,0.5).
+
+present(n410,0.5).
+present(n411,0.5).
+
+present(n420,0.5).
+present(n421,0.5).
+
+present(n430,0.5).
+present(n431,0.5).
+
+present(n440,0.5).
+present(n441,0.5).
+
+%======================== Output =========================%
+% In this neuromorphic example,
+% the output and input species coincide.
+
+make_absent_not_present.
+
+%======================= Reaction ========================%
+parameter(k,1).
+parameter(kb,10).parameter(K,200).
+ 
+%=======================================%
+% Shared summation of rows and columns.
+% #: 16+8+5=29.
+MA(K) for A+n111=>A+n111+row1total+col1total.
+MA(K) for A+n121=>A+n121+row1total+col2total.
+MA(K) for A+n131=>A+n131+row1total+col3total.
+MA(K) for A+n141=>A+n141+row1total+col4total.
+MA(K) for A+n211=>A+n211+row2total+col1total.
+MA(K) for A+n221=>A+n221+row2total+col2total.
+MA(K) for A+n231=>A+n231+row2total+col3total.
+MA(K) for A+n241=>A+n241+row2total+col4total.
+MA(K) for A+n311=>A+n311+row3total+col1total.
+MA(K) for A+n321=>A+n321+row3total+col2total.
+MA(K) for A+n331=>A+n331+row3total+col3total.
+MA(K) for A+n341=>A+n341+row3total+col4total.
+MA(K) for A+n411=>A+n411+row4total+col1total.
+MA(K) for A+n421=>A+n421+row4total+col2total.
+MA(K) for A+n431=>A+n431+row4total+col3total.
+MA(K) for A+n441=>A+n441+row4total+col4total.
+MA(K) for row1total=>_.
+MA(K) for row2total=>_.
+MA(K) for row3total=>_.
+MA(K) for row4total=>_.
+MA(K) for col1total=>_.
+MA(K) for col2total=>_.
+MA(K) for col3total=>_.
+MA(K) for col4total=>_.
+
+MA(K) for row1total=>row1total+total.
+MA(K) for row2total=>row2total+total.
+MA(K) for row3total=>row3total+total.
+MA(K) for row3total=>row4total+total.
+MA(K) for total=>_.
+%===========================%
+% Bistable.
+% #: 3*16=48.
+MA(kb) for n110+n111=>S11.
+MA(kb) for S11+n110=>3*n110.
+MA(kb) for S11+n111=>3*n111.
+
+MA(kb) for n120+n121=>S12.
+MA(kb) for S12+n120=>3*n120.
+MA(kb) for S12+n121=>3*n121.
+
+MA(kb) for n130+n131=>S13.
+MA(kb) for S13+n130=>3*n130.
+MA(kb) for S13+n131=>3*n131.
+
+MA(kb) for n140+n141=>S14.
+MA(kb) for S14+n140=>3*n140.
+MA(kb) for S14+n141=>3*n141.
+
+MA(kb) for n210+n211=>S21.
+MA(kb) for S21+n210=>3*n210.
+MA(kb) for S21+n211=>3*n211.
+
+MA(kb) for n220+n221=>S22.
+MA(kb) for S22+n220=>3*n220.
+MA(kb) for S22+n221=>3*n221.
+
+MA(kb) for n230+n231=>S23.
+MA(kb) for S23+n230=>3*n230.
+MA(kb) for S23+n231=>3*n231.
+
+MA(kb) for n240+n241=>S24.
+MA(kb) for S24+n240=>3*n240.
+MA(kb) for S24+n241=>3*n241.
+
+MA(kb) for n310+n311=>S31.
+MA(kb) for S31+n310=>3*n310.
+MA(kb) for S31+n311=>3*n311.
+
+MA(kb) for n320+n321=>S32.
+MA(kb) for S32+n320=>3*n320.
+MA(kb) for S32+n321=>3*n321.
+
+MA(kb) for n330+n331=>S33.
+MA(kb) for S33+n330=>3*n330.
+MA(kb) for S33+n331=>3*n331.
+
+MA(kb) for n340+n341=>S34.
+MA(kb) for S34+n340=>3*n340.
+MA(kb) for S34+n341=>3*n341.
+
+MA(kb) for n410+n411=>S41.
+MA(kb) for S41+n410=>3*n410.
+MA(kb) for S41+n411=>3*n411.
+
+MA(kb) for n420+n421=>S2.
+MA(kb) for S42+n420=>3*n420.
+MA(kb) for S42+n421=>3*n421.
+
+MA(kb) for n430+n431=>S43.
+MA(kb) for S43+n430=>3*n430.
+MA(kb) for S43+n431=>3*n431.
+
+MA(kb) for n440+n441=>S44.
+MA(kb) for S44+n440=>3*n440.
+MA(kb) for S44+n441=>3*n441.
+
+%==============================%
+% Time derivitive (leakage).
+% #: 2*16=32.
+MA(k) for n110p+tau=>n111p+n110p+tau.
+MA(k) for n111p+tau=>n110p+n111p+tau.
+
+MA(k) for n120p+tau=>n121p+n120p+tau.
+MA(k) for n121p+tau=>n120p+n121p+tau.
+
+MA(k) for n130p+tau=>n131p+n130p+tau.
+MA(k) for n131p+tau=>n130p+n131p+tau.
+
+MA(k) for n140p+tau=>n141p+n140p+tau.
+MA(k) for n141p+tau=>n140p+n141p+tau.
+
+MA(k) for n210p+tau=>n211p+n210p+tau.
+MA(k) for n211p+tau=>n210p+n211p+tau.
+
+MA(k) for n220p+tau=>n221p+n220p+tau.
+MA(k) for n221p+tau=>n220p+n221p+tau.
+
+MA(k) for n230p+tau=>n231p+n230p+tau.
+MA(k) for n231p+tau=>n230p+n231p+tau.
+
+MA(k) for n240p+tau=>n241p+n240p+tau.
+MA(k) for n241p+tau=>n240p+n241p+tau.
+
+MA(k) for n310p+tau=>n311p+n310p+tau.
+MA(k) for n311p+tau=>n310p+n311p+tau.
+
+MA(k) for n320p+tau=>n321p+n320p+tau.
+MA(k) for n321p+tau=>n320p+n321p+tau.
+
+MA(k) for n330p+tau=>n331p+n330p+tau.
+MA(k) for n331p+tau=>n330p+n331p+tau.
+
+MA(k) for n340p+tau=>n341p+n340p+tau.
+MA(k) for n341p+tau=>n340p+n341p+tau.
+
+MA(k) for n410p+tau=>n411p+n410p+tau.
+MA(k) for n411p+tau=>n410p+n411p+tau.
+
+MA(k) for n420p+tau=>n421p+n420p+tau.
+MA(k) for n421p+tau=>n420p+n421p+tau.
+
+MA(k) for n430p+tau=>n431p+n430p+tau.
+MA(k) for n431p+tau=>n430p+n431p+tau.
+
+MA(k) for n440p+tau=>n441p+n440p+tau.
+MA(k) for n441p+tau=>n440p+n441p+tau.
+
+%=======================================================%
+% Time derivitive (illegitimate solution inhibition).
+% #: 8+16=24.
+MA(k) for row1total=>row1total+n110p+n120p+n130p+n140p.
+MA(k) for row2total=>row2total+n210p+n220p+n230p+n240p.
+MA(k) for row3total=>row3total+n310p+n320p+n330p+n340p.
+MA(k) for row4total=>row4total+n410p+n420p+n430p+n440p.
+
+MA(k) for col1total=>col1total+n110p+n210p+n310p+n410p.
+MA(k) for col2total=>col2total+n120p+n220p+n320p+n420p.
+MA(k) for col3total=>col3total+n130p+n230p+n330p+n430p.
+MA(k) for col4total=>col4total+n140p+n240p+n340p+n440p.
+
+MA(k) for A+n111=>A+n111+2*n110p.
+MA(k) for A+n121=>A+n121+2*n120p.
+MA(k) for A+n131=>A+n131+2*n130p.
+MA(k) for A+n141=>A+n141+2*n140p.
+MA(k) for A+n211=>A+n211+2*n210p.
+MA(k) for A+n221=>A+n221+2*n220p.
+MA(k) for A+n231=>A+n231+2*n230p.
+MA(k) for A+n241=>A+n241+2*n240p.
+MA(k) for A+n311=>A+n311+2*n310p.
+MA(k) for A+n321=>A+n321+2*n320p.
+MA(k) for A+n331=>A+n331+2*n330p.
+MA(k) for A+n341=>A+n341+2*n340p.
+MA(k) for A+n411=>A+n411+2*n410p.
+MA(k) for A+n421=>A+n421+2*n420p.
+MA(k) for A+n431=>A+n431+2*n430p.
+MA(k) for A+n441=>A+n441+2*n440p.
+
+%=======================================================%
+% Time derivitive (only n 1’s are allowed).
+% #: 2.
+MA(k) for C+total=>C+total
+                   +n110p+n120p+n130p+n140p
+                   +n210p+n220p+n230p+n240p
+                   +n310p+n320p+n330p+n340p
+                   +n410p+n420p+n430p+n440p.
+MA(k) for Cn=>Cn+n111p+n121p+n131p+n141p
+                +n211p+n221p+n231p+n241p
+                +n311p+n321p+n331p+n341p
+                +n411p+n421p+n431p+n441p.
+%=======================================================%
+% Time derivitive (prefer shorter distance).
+% #: 3*8+6*8=72.
+MA(k) for d12+n221=>d12+n221+n110p.
+MA(k) for d13+n321=>d13+n321+n110p.
+MA(k) for d14+n421=>d14+n421+n110p.
+
+MA(k) for d12+n121=>d12+n121+n210p.
+MA(k) for d23+n321=>d23+n321+n210p.
+MA(k) for d24+n421=>d24+n421+n210p.
+
+MA(k) for d13+n121=>d13+n121+n310p.
+MA(k) for d23+n221=>d23+n221+n310p.
+MA(k) for d34+n421=>d34+n421+n310p.
+
+MA(k) for d14+n121=>d14+n121+n410p.
+MA(k) for d24+n221=>d24+n221+n410p.
+MA(k) for d34+n321=>d34+n321+n410p.
+
+MA(k) for d12+n211=>d12+n211+n120p.
+MA(k) for d13+n311=>d13+n311+n120p.
+MA(k) for d14+n411=>d14+n411+n120p.
+MA(k) for d12+n231=>d12+n231+n120p.
+MA(k) for d13+n331=>d13+n331+n120p.
+MA(k) for d14+n431=>d14+n431+n120p.
+
+MA(k) for d12+n111=>d12+n111+n220p.
+MA(k) for d23+n311=>d23+n311+n220p.
+MA(k) for d24+n411=>d24+n411+n220p.
+MA(k) for d12+n131=>d12+n131+n220p.
+MA(k) for d23+n331=>d23+n331+n220p.
+MA(k) for d24+n431=>d24+n431+n220p.
+
+MA(k) for d13+n111=>d13+n111+n320p.
+MA(k) for d23+n211=>d23+n211+n320p.
+MA(k) for d34+n411=>d34+n411+n320p.
+MA(k) for d13+n131=>d13+n131+n320p.
+MA(k) for d23+n231=>d23+n231+n320p.
+MA(k) for d34+n431=>d34+n431+n320p.
+
+MA(k) for d14+n111=>d14+n111+n420p.
+MA(k) for d24+n211=>d24+n211+n420p.
+MA(k) for d34+n311=>d34+n311+n420p.
+MA(k) for d14+n131=>d14+n131+n420p.
+MA(k) for d24+n231=>d24+n231+n420p.
+MA(k) for d34+n331=>d34+n331+n420p.
+
+MA(k) for d12+n221=>d12+n221+n130p.
+MA(k) for d13+n321=>d13+n321+n130p.
+MA(k) for d14+n421=>d14+n421+n130p.
+MA(k) for d12+n241=>d12+n241+n130p.
+MA(k) for d13+n341=>d13+n341+n130p.
+MA(k) for d14+n441=>d14+n441+n130p.
+
+MA(k) for d12+n121=>d12+n121+n230p.
+MA(k) for d23+n321=>d23+n321+n230p.
+MA(k) for d24+n421=>d24+n421+n230p.
+MA(k) for d12+n141=>d12+n141+n230p.
+MA(k) for d23+n341=>d23+n341+n230p.
+MA(k) for d24+n441=>d24+n441+n230p.
+
+MA(k) for d13+n121=>d13+n121+n330p.
+MA(k) for d23+n221=>d23+n221+n330p.
+MA(k) for d34+n421=>d34+n421+n330p.
+MA(k) for d13+n141=>d13+n141+n330p.
+MA(k) for d23+n241=>d23+n241+n330p.
+MA(k) for d34+n441=>d34+n441+n330p.
+
+MA(k) for d14+n121=>d14+n121+n430p.
+MA(k) for d24+n221=>d24+n221+n430p.
+MA(k) for d34+n321=>d34+n321+n430p.
+MA(k) for d14+n141=>d14+n141+n430p.
+MA(k) for d24+n241=>d24+n241+n430p.
+MA(k) for d34+n341=>d34+n341+n430p.
+
+MA(k) for d12+n231=>d12+n231+n140p.
+MA(k) for d13+n331=>d13+n331+n140p.
+MA(k) for d14+n431=>d14+n431+n140p.
+
+MA(k) for d12+n131=>d12+n131+n240p.
+MA(k) for d23+n331=>d23+n331+n240p.
+MA(k) for d24+n431=>d24+n431+n240p.
+
+MA(k) for d13+n131=>d13+n131+n340p.
+MA(k) for d23+n231=>d23+n231+n340p.
+MA(k) for d34+n431=>d34+n431+n340p.
+
+MA(k) for d14+n131=>d14+n131+n440p.
+MA(k) for d24+n231=>d24+n231+n440p.
+MA(k) for d34+n331=>d34+n331+n440p.
+
+%=====================================%
+% Update from reaction buffer.
+% (nijp can be considered as buffers.)
+% #: 3*16=48.
+MA(K) for n111p+n110p=>_.
+MA(kb) for n111p+n110=>n111.
+MA(kb) for n110p+n111=>n110.
+
+MA(K) for n121p+n120p=>_.
+MA(kb) for n121p+n120=>n121.
+MA(kb) for n120p+n121=>n120.
+
+MA(K) for n131p+n130p=>_.
+MA(kb) for n131p+n130=>n131.
+MA(kb) for n130p+n131=>n130.
+
+MA(K) for n141p+n140p=>_.
+MA(kb) for n141p+n140=>n141.
+MA(kb) for n140p+n141=>n140.
+
+MA(K) for n211p+n210p=>_.
+MA(kb) for n211p+n210=>n211.
+MA(kb) for n210p+n211=>n210.
+
+MA(K) for n221p+n220p=>_.
+MA(kb) for n221p+n220=>n221.
+MA(kb) for n220p+n221=>n220.
+
+MA(K) for n231p+n230p=>_.
+MA(kb) for n231p+n230=>n231.
+MA(kb) for n230p+n231=>n230.
+
+MA(K) for n241p+n240p=>_.
+MA(kb) for n241p+n240=>n241.
+MA(kb) for n240p+n241=>n240.
+
+MA(K) for n311p+n310p=>_.
+MA(kb) for n311p+n310=>n311.
+MA(kb) for n310p+n311=>n310.
+
+MA(K) for n321p+n320p=>_.
+MA(kb) for n321p+n320=>n321.
+MA(kb) for n320p+n321=>n320.
+
+MA(K) for n331p+n330p=>_.
+MA(kb) for n331p+n330=>n331.
+MA(kb) for n330p+n331=>n330.
+
+MA(K) for n341p+n340p=>_.
+MA(kb) for n341p+n340=>n341.
+MA(kb) for n340p+n341=>n340.
+
+MA(K) for n411p+n410p=>_.
+MA(kb) for n411p+n410=>n411.
+MA(kb) for n410p+n411=>n410.
+
+MA(K) for n421p+n420p=>_.
+MA(kb) for n421p+n420=>n421.
+MA(kb) for n420p+n421=>n420.
+
+MA(K) for n431p+n430p=>_.
+MA(kb) for n431p+n430=>n431.
+MA(kb) for n430p+n431=>n430.
+
+MA(K) for n441p+n440p=>_.
+MA(kb) for n441p+n440=>n441.
+MA(kb) for n440p+n441=>n440.
+
+%===========================%
+% Simulation and plot.
+numerical_method(rk).
+numerical_simulation(10).
+hide_molecules({n110p,n111p,n120p,n121p,n130p,n131p,n140p,n141p,
+n210p,n211p,n220p,n221p,n230p,n231p,n240p,n241p,
+n310p,n311p,n320p,n321p,n330p,n331p,n340p,n341p,
+n410p,n411p,n420p,n421p,n430p,n431p,n440p,n441p,
+S11,S12,S13,S14,S21,S22,S23,S24,S31,S32,S33,S34,S41,S42,S43,S44,
+d12,d13,d14,d23,d24,d34,tau,A,C,Cn,total,
+col1total,col2total,col3total,col4total,
+row1total,row2total,row3total,row4total}).
+export_plot(TSP).
+plot.

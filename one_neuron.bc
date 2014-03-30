@@ -1,0 +1,43 @@
+%% Input
+% Threshold = 3.
+present(w0,3).
+
+% Weight(w1, w2)=(5,-1).
+present(w11,5).
+present(w10,0).
+present(w21,0).
+present(w20,1).
+
+% Neurons(u1, u2)
+present(u1,1).
+present(u2,0).
+present(uth,1).
+
+%% Output
+present(v0,0).
+present(v1,1).
+present(v0p,0).
+present(v1p,0).
+present(Sv,0).
+
+% Reactions
+parameter(k, 1).parameter(K, 200). 
+
+MA(k) for v0+v1=>Sv.
+MA(k) for Sv+v0=>3*v0.
+MA(k) for Sv+v1=>3*v1.
+MA(k) for w11+u1=>v1p+w11+u1.
+MA(k) for w10+u1=>v0p+w10+u1.MA(k) for w21+u2=>v1p+w21+u2.
+MA(k) for w20+u2=>v0p+w20+u2.
+MA(k) for w0+uth=>v0p+w0+uth.
+
+%MA(K) for v1p+v0p=>_.
+MA(k) for v0p=>_.
+MA(k) for v1p=>_.
+MA(K) for v1p+v0=>v1.
+MA(K) for v0p+v1=>v0.
+
+numerical_method(rk).
+numerical_simulation(5).
+hide_molecules({w10,w11,w20,w21,w0,v0p,v1p}).
+plot.

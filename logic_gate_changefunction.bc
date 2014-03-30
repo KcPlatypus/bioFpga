@@ -1,0 +1,63 @@
+% Input
+present(i1,0).
+present(i2,0). %i2 forced to be 1 when NOT.
+
+% Output
+% robust toward initial concentration
+present(fp,0).
+present(fn,0).
+
+% Middle Result
+present(y1,0).
+present(y2,0).
+
+% Use these to set the gate’s function
+% k8*a8=k9; k3*a3=k4;
+% AND: a6=0; (k1/k2)*k7*a7=k9; fn. 
+% OR: (k1/k2)*k7*a7=(k4/k5)*k6*a6=k9; fp.
+% XOR: (k1/k2)*k7*a7=2*(k4/k5)*k6*a6=2*k9; fp.
+% NOT: i2=1 for XOR.
+
+present(a3,1).
+%present(a6,0). % a6=0 when AND, 1 otherwise.
+%present(a7,1). % a7=2 when XOR, 1 otherwise.
+present(a8,1).
+
+% These will be given in real-world scenario.
+parameter(k1, 1).parameter(k2, 1).parameter(k3, 1).parameter(k4, 1).parameter(k5, 1). parameter(k6, 1). parameter(k7, 1). parameter(k8, 1). parameter(k9, 1).
+parameter(k10,0).
+parameter(k11,0).
+parameter(k12,0).
+parameter(k13,0).
+parameter(a6, 0).
+parameter(a7, 1).parameter(K, 500). 
+
+event(Time>50, [k12,k13], [100,100]).
+event(Time>150, [k10,k11], [100,100]).
+event(Time>250, [k12], [0]).
+event(Time>350, [k12], [100]).
+event(Time>450, [k10], [0]).
+
+MA(k10) for _=>i1.
+MA(k11) for i1=>_.
+MA(k12) for _=>i2.
+MA(k13) for i2=>_.
+
+% logic switching events
+event(Time>100, [a6], [1]).
+event(Time>200, [a7], [2]).
+event(Time>300, [a6,a7], [0,1]).
+event(Time>400, [a6,a7], [1,2]).
+
+% Reactions
+MA(k1) for i1+i2 => i1+i2+y1.MA(k2) for y1 => _.MA(k3) for a3+i1 => a3+i1+y2.MA(k4) for i2 => i2+y2.MA(k5) for y2 => _.%MA(k6) for a6+y2 => a6+y2+fp.%MA(k7) for a7+y1 => a7+y1+fn.
+MA(k6*a6) for y2 => y2+fp.MA(k7*a7) for y1 => y1+fn.
+MA(k8) for a8+fp => a8.
+MA(k9) for fn => _.
+MA(K) for fp+fn => _.
+
+numerical_method(rk).
+numerical_simulation(500).
+hide_molecules({a3,a8,y1,y2}).
+export_plot(change_function).
+plot.

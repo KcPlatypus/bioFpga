@@ -1,0 +1,31 @@
+% (Generalized) Multiplexer
+present(i0,10).
+present(i1,7).
+present(sel0,0).
+present(sel1,1).
+present(out,0).
+
+parameter(k1,10).
+parameter(k2,10).
+parameter(k3,10).
+parameter(k4,0).
+parameter(k5,0).
+parameter(k6,0).
+parameter(k7,0).
+
+MA(k4) for _=>sel0.
+MA(k5) for sel0=>_.
+MA(k6) for _=>sel1.
+MA(k7) for sel1=>_.
+
+event(Time>10, [k4,k5,k7], [10,10,10]).
+event(Time>20, [k4,k6], [0,10]).
+
+MA(k1) for sel0+i0=>sel0+i0+out.
+MA(k2) for sel1+i1=>sel1+i1+out.
+MA(k3) for out=>_.
+
+numerical_method(rk).
+numerical_simulation(30).
+hide_molecules({i0,i1,S}).
+plot.

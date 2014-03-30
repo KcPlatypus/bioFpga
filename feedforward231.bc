@@ -1,0 +1,192 @@
+present(wTH,3).
+present(wTHout,5).
+
+present(w11p,5).
+present(w11n,0).
+present(w21p,0).
+present(w21n,1).
+
+present(w12p,5).
+present(w12n,0).
+present(w13p,0).
+present(w13n,2).
+present(w14p,2).
+present(w14n,0).
+
+present(w22p,0).
+present(w22n,1).
+present(w23p,4).
+present(w23n,0).
+present(w24p,2).
+present(w24n,0).
+
+present(w1p,4).
+present(w1n,0).
+
+present(w2p,6).
+present(w2n,0).
+present(w3p,4).
+present(w3n,0).
+present(w4p,2).
+present(w4n,0).
+
+% Inputs(u1,u2)
+present(u1,1).
+present(u2,0).
+
+parameter(k10,0).
+parameter(k11,0).
+parameter(k12,0).
+parameter(k13,0).
+event(Time>5, [k12,k13], [500,500]).
+event(Time>10, [k10,k11], [0,500]).
+event(Time>15, [k12], [0]).
+
+MA(k10) for _=>u1.
+MA(k11) for u1=>_.
+MA(k12) for _=>u2.
+MA(k13) for u2=>_.
+
+present(uTH,1).
+
+% Hidden Layer
+present(h10,0).
+present(h11,1).
+present(h10p,0).
+present(h11p,0).
+present(Sh1,0).
+
+present(h20,1).
+present(h21,0).
+present(h20p,0).
+present(h21p,0).
+present(Sh2,0).
+
+present(h30,1).
+present(h31,0).
+present(h30p,0).
+present(h31p,0).
+present(Sh3,0).
+
+present(h40,1).
+present(h41,0).
+present(h40p,0).
+present(h41p,0).
+present(Sh4,0).
+
+%% Output
+present(v0,1).
+present(v1,0).
+present(v0p,0).
+present(v1p,0).
+present(Sv,0).
+
+% Reactions
+parameter(k, 5).parameter(K, 500). 
+
+MA(k) for v0+v1=>Sv.
+MA(k) for Sv+v0=>3*v0.
+MA(k) for Sv+v1=>3*v1.
+
+MA(k) for h10+h11=>Sh1.
+MA(k) for Sh1+h10=>3*h10.
+MA(k) for Sh1+h11=>3*h11.
+
+MA(k) for h20+h21=>Sh2.
+MA(k) for Sh2+h20=>3*h20.
+MA(k) for Sh2+h21=>3*h21.
+
+MA(k) for h30+h31=>Sh3.
+MA(k) for Sh3+h30=>3*h30.
+MA(k) for Sh3+h31=>3*h31.
+
+MA(k) for h40+h41=>Sh4.
+MA(k) for Sh4+h40=>3*h40.
+MA(k) for Sh4+h41=>3*h41.
+
+%threshold
+MA(k) for wTH+uTH=>h20p+h30p+h40p+wTH+uTH.
+MA(k) for wTHout+uTH=>v0p+wTHout+uTH.
+
+%input 1 to hidden
+MA(k) for w11p+u1=>h11p+w11p+u1.
+MA(k) for w11n+u1=>h10p+w11n+u1.MA(k) for w12p+u1=>h21p+w12p+u1.
+MA(k) for w12n+u1=>h20p+w12n+u1.
+MA(k) for w13p+u1=>h31p+w13p+u1.
+MA(k) for w13n+u1=>h30p+w13n+u1.
+MA(k) for w14p+u1=>h41p+w14p+u1.
+MA(k) for w14n+u1=>h40p+w14n+u1.
+%input 2 to hidden
+MA(k) for w21p+u2=>h11p+w21p+u2.
+MA(k) for w21n+u2=>h10p+w21n+u2.MA(k) for w22p+u2=>h21p+w22p+u2.
+MA(k) for w22n+u2=>h20p+w22n+u2.
+MA(k) for w23p+u2=>h31p+w23p+u2.
+MA(k) for w23n+u2=>h30p+w23n+u2.
+MA(k) for w24p+u2=>h41p+w24p+u2.
+MA(k) for w24n+u2=>h40p+w24n+u2.
+%hidden1 to output
+MA(k) for w1p+h11=>v1p+w1p+h11.
+MA(k) for w1n+h11=>v0p+w1n+h11.
+
+%hidden2 to output
+MA(k) for w2p+h21=>v1p+w2p+h21.
+MA(k) for w2n+h21=>v0p+w2n+h21.
+
+%hidden3 to output
+MA(k) for w3p+h31=>v1p+w3p+h31.
+MA(k) for w3n+h31=>v0p+w3n+h31.
+
+%hidden4 to output
+MA(k) for w4p+h41=>v1p+w4p+h41.
+MA(k) for w4n+h41=>v0p+w4n+h41.
+
+%hidden1 bistable
+MA(k) for h10p=>_.
+MA(k) for h11p=>_.
+MA(K) for h11p+h10=>h11.
+MA(K) for h10p+h11=>h10.
+
+%hidden2 bistable
+MA(k) for h20p=>_.
+MA(k) for h21p=>_.
+MA(K) for h20p+h21p=>_.
+MA(K) for h21p+h20=>h21.
+MA(K) for h20p+h21=>h20.
+
+%hidden3 bistable
+MA(k) for h30p=>_.
+MA(k) for h31p=>_.
+MA(K) for h30p+h31p=>_.
+MA(K) for h31p+h30=>h31.
+MA(K) for h30p+h31=>h30.
+
+%hidden4 bistable
+MA(k) for h40p=>_.
+MA(k) for h41p=>_.
+MA(K) for h40p+h41p=>_.
+MA(K) for h41p+h40=>h41.
+MA(K) for h40p+h41=>h40.
+
+%output bistable
+MA(k) for v0p=>_.
+MA(k) for v1p=>_.
+MA(K) for v0p+v1p=>_.
+MA(K) for v1p+v0=>v1.
+MA(K) for v0p+v1=>v0.
+
+numerical_method(rk).
+numerical_simulation(20).
+hide_molecules({uTH,
+w1n,w1p,
+w2n,w2p,w3n,w3p,w4n,w4p,
+w11n,w11p,
+w12n,w12p,w13n,w13p,w14n,w14p,
+w21n,w21p,
+w22n,w22p,w23n,w23p,w24n,w24p,wTH,wTHout,
+v0,v0p,v1p,
+h10,h10p,h11p,h11,
+h20,h20p,h21p,h30,h30p,h31p,h40,h40p,h41p,
+Sh1,
+Sh2,Sh3,Sh4,Sv}).
+export_plot(feedforward).
+plot.
