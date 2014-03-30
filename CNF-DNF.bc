@@ -1,53 +1,166 @@
+%% (x1,x2,x3,x4)= (0,1,0,1).
+%% f1=(x1+x2)(x1’+x2+x3’)(x3+x4).
+%% f2=(x1x2x3)+(x2’)+(x1’x4).
+
+%% PIs.
+present(i1g1,0). % 0
+present(i2g1,1). % 1
+present(i2g2,0). % 0
+present(i1g3,1). % 0**
+present(i2g3,1). % 1
+present(i2g4,1). % 1
+present(i1g5,0). % 1**
+present(i2g5,1). % 1
+present(i2g6,0). % 1**
+
+make_absent_not_present.
+
+%% Start from CNF.
+parameter(a6front, 1).
+parameter(a7front, 1).
+parameter(a6back, 0).
+parameter(a7back, 1).
+parameter(w12p,0).
+parameter(w27p,0).
+parameter(w34p,0).
+parameter(w47p,0).
+parameter(w56p,0).
+parameter(w68p,0).
+parameter(w78p,0).
+parameter(w12n,0).
+parameter(w27n,0).
+parameter(w34n,0).
+parameter(w47n,0).
+parameter(w56n,0).
+parameter(w68n,0).
+parameter(w78n,0).
+
+parameter(k1,0).
+parameter(k2,0).
+parameter(k3,0).
+parameter(k4,0).
+parameter(k5,0).
+
+parameter(k,1).
+parameter(K,500).
+
+% Connect gates.
+event(Time>10, [w12p,w27p,w34p,w47p,w56p,w68p,w78n], [1,1,1,1,1,1,1]).
+% Switch to DNF.
+event(Time>100, 
+     [a6front,a6back,
+      w12p,w12n,w27p,w27n,w34p,w34n,w47p,w47n,w56p,w56n,w68p,w68n,w78p,w78n,
+      k1,k2,k3,k4,k5], 
+     [0,1,
+      0,1,0,1,0,1,0,1,0,1,0,1,1,0,
+      500,500,500,500,500]).
+MA(k1) for i1g3=>_.
+MA(k2) for _=>i1g5.
+MA(k3) for i1g5=>_.
+MA(k4) for _=>i2g6.
+MA(k5) for i2g6=>_.
+
+%% Wirings
+% w12
+MA(K*w12p) for fpg1 => i1g2+fpg1.
+MA(K*w12p) for i1g2 => _.
+MA(K*w12n) for fpg1 => i1g2+fpg1.
+MA(K*w12n) for i1g2 => _.
+
+% w27
+MA(K*w27p) for fpg2 => i1g7+fpg2.
+MA(K*w27p) for i1g7 => _.
+MA(K*w27n) for fpg2 => i1g7+fpg2.
+MA(K*w27n) for i1g7 => _.
+
+% w34
+MA(K*w34p) for fpg3 => i1g4+fpg3.
+MA(K*w34p) for i1g4 => _.
+MA(K*w34n) for fpg3 => i1g4+fpg3.
+MA(K*w34n) for i1g4 => _.
+
+% w47
+MA(K*w47p) for fpg4 => i2g7+fpg4.
+MA(K*w47p) for i2g7 => _.
+MA(K*w47n) for fpg4 => i2g7+fpg4.
+MA(K*w47n) for i2g7 => _.
+
+% w56
+MA(K*w56p) for fpg5 => i1g6+fpg5.
+MA(K*w56p) for i1g6 => _.
+MA(K*w56n) for fpg5 => i1g6+fpg5.
+MA(K*w56n) for i1g6 => _.
+
+% w68
+MA(K*w68p) for fpg6 => i2g8+fpg6.
+MA(K*w68p) for i2g8 => _.
+MA(K*w68n) for fpg6 => i2g8+fpg6.
+MA(K*w68n) for i2g8 => _.
+
+% w78
+MA(K*w78p) for fpg7 => i1g8+fpg7.
+MA(K*w78p) for i1g8 => _.
+MA(K*w78n) for fpg7 => i1g8+fpg7.
+MA(K*w78n) for i1g8 => _.
+
+%% Gates
 % Gate 1
-MA(k) for i11+i21 => i11+i21+y11.MA(k) for y11 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
-MA(k) for a8+fp => a8.
-MA(k) for fn => _.
-MA(K) for fp+fn => _.
+MA(k) for i1g1+i2g1 => i1g1+i2g1+y1g1.MA(k) for y1g1 => _.MA(k) for i1g1 => i1g1+y2g1.MA(k) for i2g1 => i2g1+y2g1.MA(k) for y2g1 => _.MA(k*a6front) for y2g1 => y2g1+fpg1.MA(k*a7front) for y1g1 => y1g1+fng1.
+MA(k) for fpg1 => _.
+MA(k) for fng1 => _.
+MA(K) for fpg1+fng1 => _.
 
 % Gate 2
-MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
-MA(k) for a8+fp => a8.
-MA(k) for fn => _.
-MA(K) for fp+fn => _.
+MA(k) for i1g2+i2g2 => i1g2+i2g2+y1g2.MA(k) for y1g2 => _.MA(k) for i1g2 => i1g2+y2g2.MA(k) for i2g2 => i2g2+y2g2.MA(k) for y2g2 => _.MA(k*a6front) for y2g2 => y2g2+fpg2.MA(k*a7front) for y1g2 => y1g2+fng2.
+MA(k) for fpg2 => _.
+MA(k) for fng2 => _.
+MA(K) for fpg2+fng2 => _.
 
 % Gate 3
-MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
-MA(k) for a8+fp => a8.
-MA(k) for fn => _.
-MA(K) for fp+fn => _.
+MA(k) for i1g3+i2g3 => i1g3+i2g3+y1g3.MA(k) for y1g3 => _.MA(k) for i1g3 => i1g3+y2g3.MA(k) for i2g3 => i2g3+y2g3.MA(k) for y2g3 => _.MA(k*a6front) for y2g3 => y2g3+fpg3.MA(k*a7front) for y1g3 => y1g3+fng3.
+MA(k) for fpg3 => _.
+MA(k) for fng3 => _.
+MA(K) for fpg3+fng3 => _.
 
 % Gate 4
-MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
-MA(k) for a8+fp => a8.
-MA(k) for fn => _.
-MA(K) for fp+fn => _.
+MA(k) for i1g4+i2g4 => i1g4+i2g4+y1g4.MA(k) for y1g4 => _.MA(k) for i1g4 => i1g4+y2g4.MA(k) for i2g4 => i2g4+y2g4.MA(k) for y2g4 => _.MA(k*a6front) for y2g4 => y2g4+fpg4.MA(k*a7front) for y1g4 => y1g4+fng4.
+MA(k) for fpg4 => _.
+MA(k) for fng4 => _.
+MA(K) for fpg4+fng4 => _.
 
 % Gate 5
-MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
-MA(k) for a8+fp => a8.
-MA(k) for fn => _.
-MA(K) for fp+fn => _.
+MA(k) for i1g5+i2g5 => i1g5+i2g5+y1g5.MA(k) for y1g5 => _.MA(k) for i1g5 => i1g5+y2g5.MA(k) for i2g5 => i2g5+y2g5.MA(k) for y2g5 => _.MA(k*a6front) for y2g5 => y2g5+fpg5.MA(k*a7front) for y1g5 => y1g5+fng5.
+MA(k) for fpg5 => _.
+MA(k) for fng5 => _.
+MA(K) for fpg5+fng5 => _.
 
 % Gate 6
-MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
-MA(k) for a8+fp => a8.
-MA(k) for fn => _.
-MA(K) for fp+fn => _.
+MA(k) for i1g6+i2g6 => i1g6+i2g6+y1g6.MA(k) for y1g6 => _.MA(k) for i1g6 => i1g6+y2g6.MA(k) for i2g6 => i2g6+y2g6.MA(k) for y2g6 => _.MA(k*a6front) for y2g6 => y2g6+fpg6.MA(k*a7front) for y1g6 => y1g6+fng6.
+MA(k) for fpg6 => _.
+MA(k) for fng6 => _.
+MA(K) for fpg6+fng6 => _.
 
 % Gate 7
-MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
-MA(k) for a8+fp => a8.
-MA(k) for fn => _.
-MA(K) for fp+fn => _.
+MA(k) for i1g7+i2g7 => i1g7+i2g7+y1g7.MA(k) for y1g7 => _.MA(k) for i1g7 => i1g7+y2g7.MA(k) for i2g7 => i2g7+y2g7.MA(k) for y2g7 => _.MA(k*a6back) for y2g7 => y2g7+fpg7.MA(k*a7back) for y1g7 => y1g7+fng7.
+MA(k) for fpg7 => _.
+MA(k) for fng7 => _.
+MA(K) for fpg7+fng7 => _.
 
 % Gate 8
-MA(k) for i1+i2 => i1+i2+y1.MA(k) for y1 => _.MA(k) for a3+i1 => a3+i1+y2.MA(k) for i2 => i2+y2.MA(k) for y2 => _.MA(k*a6) for y2 => y2+fp.MA(k*a7) for y1 => y1+fn.
-MA(k) for a8+fp => a8.
-MA(k) for fn => _.
-MA(K) for fp+fn => _.
+MA(k) for i1g8+i2g8 => i1g8+i2g8+y1g8.MA(k) for y1g8 => _.MA(k) for i1g8 => i1g8+y2g8.MA(k) for i2g8 => i2g8+y2g8.MA(k) for y2g8 => _.MA(k*a6back) for y2g8 => y2g8+fpg8.MA(k*a7back) for y1g8 => y1g8+fng8.
+MA(k) for fpg8 => _.
+MA(k) for fng8 => _.
+MA(K) for fpg8+fng8 => _.
 
 numerical_method(rk).
 numerical_simulation(500).
-hide_molecules({a3,a8,y1,y2}).
+hide_molecules({i1g1,i2g1,y1g1,y2g1,fpg1,fng1,
+i1g2,i2g2,y1g2,y2g2,fpg2,fng2,
+i1g3,i2g3,y1g3,y2g3,fpg3,fng3,
+i1g4,i2g4,y1g4,y2g4,fpg4,fng4,
+i1g5,i2g5,y1g5,y2g5,fpg5,fng5,
+i1g6,i2g6,y1g6,y2g6,fpg6,fng6,
+i1g7,i2g7,y1g7,y2g7,fpg7,fng7,
+i1g8,i2g8,y1g8,y2g8}).
 export_plot(cdnf).
 plot.
