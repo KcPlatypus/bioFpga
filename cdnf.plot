@@ -1,6 +1,6 @@
 set style data lines
 set format y "%g"
-set xrange [0:150]
+set xrange [0:210]
 set yrange [*:*]
 set ytics nomirror autofreq
 set xtics nomirror

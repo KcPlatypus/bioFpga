@@ -1,17 +1,17 @@
-%% (x1,x2,x3,x4)= (0,1,0,1).
+%% (x1,x2,x3,x4)= (0,1,0,1)=>(0,0,0,0)=>(1,1,1,1)=>(1,1,0,0).
 %% f1=(x1+x2)(x1’+x2+x3’)(x3+x4).
 %% f2=(x1x2x3)+(x2’)+(x1’x4).
 
 %% PIs.
-present(i1g1,0). % 0
-present(i2g1,1). % 1
-present(i2g2,0). % 0
-present(i1g3,1). % 0**
-present(i2g3,1). % 1
-present(i2g4,1). % 1
-present(i1g5,0). % 1**
-present(i2g5,1). % 1
-present(i2g6,0). % 1**
+present(i1g1,0). % 0  1* 1
+present(i2g1,1). % 0* 1* 1
+present(i2g2,0). % 0  1* 0*
+present(i1g3,1). % 1  0* 0
+present(i2g3,1). % 0* 1* 1
+present(i2g4,1). % 1  1  1
+present(i1g5,0). % 0  0  0
+present(i2g5,1). % 0* 1* 0*
+present(i2g6,0). % 0  1* 1
 
 make_absent_not_present.
 
@@ -26,6 +26,14 @@ parameter(k2,0).
 parameter(k3,0).
 parameter(k4,0).
 parameter(k5,0).
+parameter(k6,0).
+parameter(k7,0).
+parameter(k8,0).
+parameter(k9,0).
+parameter(k10,0).
+parameter(k11,0).
+parameter(k12,0).
+parameter(k13,0).
 
 parameter(kfrontp1,0).
 parameter(kfrontp2,0).
@@ -39,21 +47,32 @@ parameter(kbackn2,0).
 parameter(k,1).
 parameter(K,500).
 
+% ==================================================================== %
 % Connect gates.
 event(Time>10, [kfrontp1,kfrontp2,kbackn1,kbackn2], [500,500,500,500]).
+event(Time>60, [k3,k8,k10], [500,500,500]).
+
 % Switch to DNF.
-event(Time>100, 
-     [a6front,a6back,
-      kfrontp2,kfrontn1,kfrontn2,kbackp1,kbackp2,kbackn2,
-      k1,k2,k3,k4,k5], 
-     [0,1,
-      0,500,500,500,500,0,
-      500,500,500,500,500]).
-MA(k1) for i1g3=>_.
-MA(k2) for _=>i1g5.
-MA(k3) for i1g5=>_.
-MA(k4) for _=>i2g6.
-MA(k5) for i2g6=>_.
+event(Time>110,
+     [a6front,a6back,kfrontp2,kfrontn1,kfrontn2,kbackp1,kbackp2,kbackn2,
+      k1,k2,k4,k5,k6,k7,k9,k11,k12,k13],
+     [0,1,0,500,500,500,500,0,
+      500,500,500,500,500,500,500,500,500,500]).
+event(Time>160,[k6,k11],[0,0]).
+
+MA(k1) for i1g1=>_.
+MA(k2) for _=>i1g1.
+MA(k3) for i2g1=>_.
+MA(k4) for _=>i2g1.
+MA(k5) for i2g2=>_.
+MA(k6) for _=>i2g2.
+MA(k7) for i1g3=>_.
+MA(k8) for i2g3=>_.
+MA(k9) for _=>i2g3.
+MA(k10) for i2g5=>_.
+MA(k11) for _=>i2g5.
+MA(k12) for i2g6=>_.
+MA(k13) for _=>i2g6.
 
 MA(kfrontp1) for w12p=>_.
 MA(kfrontp2) for _=>w12p.
@@ -84,6 +103,7 @@ MA(kfrontn1) for w68n=>_.
 MA(kfrontn2) for _=>w68n.
 MA(kbackn1) for w78n=>_.
 MA(kbackn2) for _=>w78n.
+% ==================================================================== %
 
 %% Wirings
 % w12
@@ -171,7 +191,7 @@ MA(k) for fng8 => _.
 MA(K) for fpg8+fng8 => _.
 
 numerical_method(rk).
-numerical_simulation(150).
+numerical_simulation(210).
 hide_molecules({
 w12p,w12n,w27p,w27n,w34p,w34n,w47p,w47n,w56p,w56n,w68p,w68n,w78p,w78n,
 i1g1,i2g1,y1g1,y2g1,fpg1,fng1,
