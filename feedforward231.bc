@@ -39,8 +39,9 @@ parameter(k11,0).
 parameter(k12,0).
 parameter(k13,0).
 event(Time>5, [k12,k13], [500,500]).
-event(Time>10, [k10,k11], [0,500]).
-event(Time>15, [k12], [0]).
+event(Time>10,[k10,k11,k12,k13],[500,1000,1000,500]).
+event(Time>15, [k10,k11,k12], [0,500,500]).
+event(Time>20, [k12], [0]).
 
 MA(k10) for _=>u1.
 MA(k11) for u1=>_.
@@ -175,7 +176,7 @@ MA(K) for v1p+v0=>v1.
 MA(K) for v0p+v1=>v0.
 
 numerical_method(rk).
-numerical_simulation(20).
+numerical_simulation(25).
 hide_molecules({uTH,
 w1n,w1p,
 w2n,w2p,w3n,w3p,w4n,w4p,
